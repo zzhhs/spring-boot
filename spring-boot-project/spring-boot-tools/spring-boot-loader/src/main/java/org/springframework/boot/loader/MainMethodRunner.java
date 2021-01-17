@@ -43,6 +43,7 @@ public class MainMethodRunner {
 	}
 
 	public void run() throws Exception {
+		//反射得到主启动类，调用main方法启动
 		Class<?> mainClass = Class.forName(this.mainClassName, false, Thread.currentThread().getContextClassLoader());
 		Method mainMethod = mainClass.getDeclaredMethod("main", String[].class);
 		mainMethod.setAccessible(true);

@@ -50,11 +50,16 @@ public abstract class Launcher {
 	 */
 	protected void launch(String[] args) throws Exception {
 		if (!isExploded()) {
+			//设置系统属性 java.protocol.handler.pkgs
 			JarFile.registerUrlProtocolHandler();
 		}
+		//读取lib目录中jar的class和class目录下的class文件
+		//并创建LaunchedURLClassLoader 类加载器加载类
 		ClassLoader classLoader = createClassLoader(getClassPathArchivesIterator());
 		String jarMode = System.getProperty("jarmode");
+		//获取主启动类
 		String launchClass = (jarMode != null && !jarMode.isEmpty()) ? JAR_MODE_LAUNCHER : getMainClass();
+		//创建MainMethodRunner（主启动类工具类），调用main方法启动SpringBoot
 		launch(args, launchClass, classLoader);
 	}
 
